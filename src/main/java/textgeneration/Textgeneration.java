@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class contverts a file written with ascii doc to a html5 or pdf file.
+ * This class converts a file written with ascii doc to a html5 or pdf file.
  *
  * @author Alfred Loran
  * @version 1.0
