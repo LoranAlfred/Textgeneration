@@ -1,0 +1,163 @@
+== 3 Unit Tests ohne Kollaborateure
+
+[.text-justify]
+Es macht wirklich Spass, die Arten der interaktion und Teile von Unit Tests zu verstehen, aber da "Übung den Meister macht", ist es höchste Zeit, dieses Wissen in die Praxis umzusetzen.
+Für den Moment werden wir uns auf die Teilmenge von Testproblemen konzentrieren, wobei wir davon ausgehen, dass unser SUT keine Kollaborateure benötigt.
+Diese Annahme, auch wenn sie für die Mehrheit der realen Klassen nicht zutrifft, wird es uns ermöglichen, eineige wichtige Konzepte, Ideen und Techniken zu demonstrieren.
+Sie lassen sich unter solchen Bedingungen viel leichter erklären, auch wenn ihre Anwendung keineswegs auf eine Umgebung ohne Mitwirkende beschränkt ist.
+Tatsächlich sind einige von ihnen, zum Beispiel der TDD Ansatz, nicht einmal auf Unit Tests selbst beschränkt.
+
+=== 3.1 Die zu testende Klasse
+
+[.text-justify]
+Für unsere ersten Unit Testing Erfahrung werden wir eine Geldklasse verwenden, die fast identisch ist mit der Klasse, die in einem populären Unit-Testing-Tutorial von JUnit verwendet wird.
+Für Unit-Tests spielt die Klasse Money eine ähnlich Rolle wie das berühmte HelloWorld Beispiel für jede Programmiersprache.
+Wir beginnen mit einer ziemlich einfachen, und wenn wir ehrlich sind, ziemlich nutzlosen, Klasse.
+Später wird sie jedoch erweitert werden.
+
+[source,java]
+public class Money {
+    private int amount;
+    private String currency;
+    public Money () {
+        amount = 0;
+        currency = "€";
+    }
+    public Money ( int amount, String currency ) {
+        this.amount = amount;
+        this.currency = currency;
+    }
+    public int getAmount () {
+        return amount;
+    }
+    public String getCurrency () {
+        return currency;
+    }
+    public boolean equals ( Object objectToCheck ) {
+        if ( objectToCheck instanceof Money ) {
+            Money money = ( Money ) objectToCheck;
+            return money.getCurrency ().equals ( getCurrency () )
+                            && getAmount () == money.getAmount ();
+        }
+        return false;
+    }
+}
+
+[.text-justify]
+Wie Sie sehen könne, ist die Klasse Money unveränderlich.
+Sie hat zwei finale Felder,die durch den Konstruktor gesetzt werden.
+Die einzige Methode mit etwas Logik ist die Implementierung von equals().
+
+=== 3.2 Der erste Unit-Test
+
+[.text-justify]
+Bevor Sie einen Test schreiben, müssen Sie eine Liste von Testfällen bereithalten.
+Sie können diese entweder irgendwo aufschreiben, falls Sie der Meinung sind, dass das Hilfreich ist, oder aber Sie merken sich diese einfach.
+
+[.text-justify]
+Wenn man sich den Code der Klasse *Money* ansieht, werden Sie wahrscheinlich zwei Dinge bemerken, die getestet werden können:
+
+* der Konstruktor
+
+* die Methode equals().
+
+[.text-justify]
+Das Testen des Konstruktors scheint eine triviale Angelegenheit zu sein und genau deshalb werden wir mit ihm beginnen.
+Das einzige, was wir hier überprüfen können ist, ob _amount_ und _currency_ richtig gesetzt werdenfootnote:1[Hierbei handelt es sich um einen solch trivialen Test, dass man das normalerweise nicht testet. Es dient wirklich nur der Veranschaulichung].
+
+[source,java]
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+public class MoneyTest {
+    private Money money;
+    @BeforeEach
+    public void initializeTestObject () {
+        money = new Money ();
+    }
+    @AfterEach
+    public void cleaningUsedTestObject () {
+        money = null;
+    }
+    @Test
+    public void givenTheMoneyConstructor_WhenAmountAndCurrencyIsSet_ThenGetterReturnsExpectedValues () {
+        money = new Money ( 10, "USD" );
+        Assertions.assertEquals ( 10, money.getAmount (), "The amount which is set is 10. The values have to be equal!" );
+        Assertions.assertEquals ( "USD", money.getCurrency (), "The currency which is set is USD. The values have to be equal!" );
+    }
+}
+
+[.text-justify]
+*Legende*
+
+[.text-justify]
+* _import org.junit.jupiter.api.Test;_ <- Die @Test Annotation ist erforderlich, damit JUnit diese Methode als Testmethode erkennt.
+
+[.text-justify]
+* _import org.junit.jupiter.api.BeforeEach;_ <- Mit dieser Annotation wird der Block *vor* jedem Test ausgeführt.
+
+[.text-justify]
+* _import org.junit.jupiter.api.AfterEach;_ <- Mit dieser Annotation wird der Block *nach* jedem Test ausgeführt.
+
+[.text-justify]
+* _public void givenTheMoneyConstructor_WhenAmountAndCurrencyIsSet_ThenGetterReturnsExpectedValues()_ <- Die Prüfmethode kann einen beliebigen Namen haben.
+Inzwischen haben sich Namensnotationen mit dem Schema given_when_then durchgesetzt.
+Hierbei ist es egal wie groß der Methodenname ist.
+Man hat dadurch nämlich den schönen Nebeneffekt, dass man durch die Namensgebung eine Menge an Tests schon dokumentiert hat, ohne diese konkret nochmal dokumentieren zu müssen.
+
+[.text-justify]
+* _money = new Money ( 10, "USD" );_ <- ein SUT wurde erstellt.
+
+[.text-justify]
+* _Assertions.assertEquals(...) _ <- Das SUT wird getestet und die Ergebnisse werden mithilfe von assertEquals() der Assertions-Klasse überprüft.
+
+[.text-justify]
+Das ist eine ganze Menge an Informationen für eine so einfache Klasse!
+Man könnte noch viel mehr über jede einzelne Zeile dieses Codes schreiben, aber das reicht erst einmal.
+Führen wir nun den Test aus.
+
+[.text-justify]
+Nachdem Sie diesen ersten Test ausgeführt haben, gibt JUnit eine kurze Zusammenfassung.
+Sie kann je nach Art der Ausführung variieren, insbesondere wird Ihre IDE sie es wahrscheinlich in einer schöneren Form darstellen, aber sie enthält immer Informationen über ausgeführte, bestandene und fehlgeschlagene Tests.
+Ein Beispiel ist unten abgebildet:
+
+[.text-justify]
+*Running MoneyTest Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.059 sec*
+
+[.text-justify]
+Achten Sie immer aude Statuszeile und reagieren Sie sofort, wenn Sie fehlgeschlagene oder übersprungene Tests sehen.
+Achten Sie auf die Anzahl der ausgeführten Tests.
+Vor allem am Anfang Ihrer Testreise kann es vorkommen, dass Ihr Test überhaupt nicht ausgeführt wird!
+
+==== 3.2.1 Test Ergebnisse
+
+[.text-justify]
+Von Hand ausgeführte Tests können zu einer Fülle von Ergebnissen führen, die von "es funktioniert bei mir" über "ich bin mir nicht sicher, aber ich habe keine Zeit es weiter zu untersuchen" bis hin zu "es funktioniert...und diese Ausnahme war schon immer da" reichen.
+Bei automatisierten Tests sieht die Sache aber anders aus.
+Es gibt nur wenige mögliche Ergebnisse.
+
+[.text-justify]
+Ein automatisierter Test kann in einem von zwei Zuständen enden: Bestanden oder Fehlgeschlagen.
+Zwei andere Ergebnisse sind weniger häufig, ein Test kann übersprungen werden oder mit einem Fehler enden.
+In automatisierten Tests ist kein Platz für "Ich denke, es sollte jetzt funktionieren"!
+
+[.text-justify]
+Wenn alle Behauptungen eines Tests erfüllt sind und keine unerwarteten Ausnahmen ausgelöst werden, ist der Test bestanden.
+Ein bestandener Test wird in IDEs und Testberichten in der Regel mit einer grünen Farbe markiert.
+
+[.text-justify]
+Wenn eine unerwartete Ausnahme ausgelöst wird, schlägt der Test fehl.
+Dies geschieht, wenn eine Behauptung nicht erfüllt ist oder Sie einen Fehler in Ihrem Code haben, der zum Beispiel zu einer ArrayIndexOutOfBoundsException führt.
+Ihre IDE und ihre Testberichte werden einen solchen fehlgeschlagenen Test mit einer roten Farbe markieren.
+
+[.text-justify]
+Ein Test kann übersprungen werden, was bedeutet, dass er gar nicht ausgeführt wurde, wenn einige seiner Annahmen nicht erfüllt wurden oder der Benutzer ausdrücklich entschieden hat, dass er übersprungen werden soll.
+Ein solcher Test wird in der Regel mit einer gelben Farbe markiert.
+
+[.text-justify]
+Schließlich kann ein Test auch als Fehler enden, wenn eine unerwartete Bedingung auftritt, die seine Ausführung unterbricht.
+Diese ist eine eher ungewöhnliche Situation und deutet normalerweise darauf hin, dass etwas mit ihrem Testcode nicht stimmt.
+Dies kann zum Beispiel passieren, wenn eine Testmethode einige Parameter erwartet, diese aber nicht bereitgestellt werden.
+Genau wie fehlgeschlagene Tests werdend auch Tests, die in einem Fehlerzustand beendet wurden, mit einer roten Farbe markiert.
+Sie werden in der Regel zusammen mit fehlgeschlagenen Test in Berichten aufgeführt.

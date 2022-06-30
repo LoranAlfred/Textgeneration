@@ -71,6 +71,6 @@ public class Textgeneration {
      */
     public static void main(String[] args) {
         Textgeneration textgeneration = new Textgeneration();
-        textgeneration.createDocuments("");
+        textgeneration.createDocuments("Tests.adoc");
     }
 }

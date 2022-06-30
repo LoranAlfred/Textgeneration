@@ -1,0 +1,111 @@
+== 4. Test Driven Development
+
+[.text-justify]
+In den Anfängen des Testens war alles ganz einfach.
+Man schrieb Code, dann schrieb man Tests umd seine Gültigkeit zu überprüfen.
+Das schien vernünftig zu sein und brachte gute Ergebnisse.
+Doch nach einiger Zeit beschlossen einige Personen, die Dinge auf den Kopf zu stellen und bestanden darauf, Test vor der Implementierung zu schreiben.
+Diese eher überraschende Idee wurde ziemlich populär und es wird behauptet, dass sie zu noch besseren Ergebnissen führt.
+
+[.text-justify]
+Ursprünglich war das Schreiben von Tests vor dem Schreiben des eigentlichen Codes eine Möglichkeit, diesen so schnell wie möglich zu verifizieren.
+Als immer mehr Menschen begannen, den Test-first-Ansatz zu verfolgen, entdecken sie bald, dass sie sofortige Überprüfung nur ein Teil der Vorteile ist, die man erhält, wenn man zuerst Tests schreibt.
+Es stellte sich heraus, dass das Nachdenken über die Tests, bevor eine Implementierung geschrieben wurde, eine leistungsstarke Entwurfstechnik ist.
+Der Code funktionierte nicht nur besser, dank der gründlichen Tests, sondern sah auch besser aus und fühlte sich besser an, was die Architektur, die Wartbarkeit und die Benutzerfreundlichkeit der API anbelangt.
+
+[.text-justify]
+Daher wird test-first heute eher als testgetriebene Entwicklung (TDD) bezeichnet.
+Es gibt immer noch einige Diskussionen über die Beziehung zwischen TDD und test-first.
+Es scheint jedoch, dass das allgemeine Verständnis dieser Begriffe darin besteht, dass sie wirklich dasselbe bedeuten.
+
+[.text-justify]
+In diesem Kapitel werden wir uns genauer ansehen, was es bedeutet, Tests vor der Implementierung zu schreiben.
+Neben der Vermittlung des theoretischen Hintergrunds werden wir uns auf die Praxis konzentrieren.
+Es ist wichtig, sich daran zu erinnern, dass, obwohl der test-first-Ansatz ausschließlich an Unit-Tests demonstriert wird, dies nicht bedeutet, dass die Anwendbarkeit von TDD auf diese spezielle Art von Tests beschränkt ist!
+Im Gegenteil, dieser Ansatz kann, und sollte, auf jeder Testebene verwendet werden.
+
+[.text-justify]
+Doch zunächst wollen wir uns verschiedene Antworten auf die folgende Frage ansehen: "Wann sollte man Tests schreiben?"
+
+=== 4.1 Wann Tests schreiben?
+
+[.text-justify]
+In den vorangegangenen Abschnitten haben wir bereits zwei Antworten auf diese Frage gegeben:
+
+* Tests nach der Implementierung schreiben.
+
+* Test vor der Implementierung schreiben.
+
+[.text-justify]
+Offensichtlich handelt es sich bei den Aussagen um Widersprüche.
+Sie müssen entscheiden, welche Regel Sie für ein bestimmtes Stück Code befolgen wollen.
+Es ist jedoch möglich, beide Regeln für den gesamten Kodierungsprozess zu verwenden und für jede Implementierungsaufgabe oder jeden Codeteil die geeignetere Regel zu wählen.
+
+[.text-justify]
+Aber es gibt noch eine weitere Antwort auf die Frage "Wann soll man Tests schreiben?", die die beiden zuvor genannten ergänzt:
+"Schreiben Sie jedes Mal einen Test, wenn ein Fehler gefunden wird".
+Betrachten wir die Ansätze mal etwas genauer.
+
+==== 4.1.1 Test Last
+
+[.text-justify]
+Beim Test-Last Ansatz werden die Tests geschrieben, nachdem der Produktionscode fertiggestellt wurde.
+Dies ist ein "traditioneller" Ansatz für das Testen, der dem neueren "Test First" Ansatz vorausgeht.
+
+[.text-justify]
+Das Schreiben der Tests nach dem Code hat Vor- und Nachteile.
+Der Hauptvorteil ist, dass die Tests geschrieben werden, wenn die Funktionalität des getesteten Objekts gut verstanden wird.
+Der größte Nachteil ist, dass der Entwickler sich auf das Testen der Implementierung konzentriert, die er in der Regel nur ein paar Minuten zuvor geschrieben hat, anstatt die Schnittstelle, das Verhalten, des SUT zu testen.
+Dies kann zu Tests führen die:
+
+[.text-justify]
+* eng an die Implementierung gekoppelt sind, und als solche bei jeder Änderung neu geschrieben werden müssen.
+
+[.text-justify]
+* die Entwickler ermutigen, (un)bewusst die Art von Testfällen auszuwählen, von denen sie erwarten, dass sie sie erfolgreich bestehen.
+
+[.text-justify]
+Außerdem besteht bei der Verwendung des "Test Last" Ansatzes immer die Versuchung, überhaupt keine Tests zu schreiben.
+Warum sollte man sich die Mühe machen, wenn man ziemlich sicher ist, dass der Code wie erwartet funktioniert?
+Warum sollte man sich die Mühe machen, wenn man die Sache laufen lässt und mit eigenen Augen sieht, dass die Protokollmeldungen genau so sind, wie man sie haben wollte?
+Es erfordert eine Menge Selbstdisziplin, Tests zu schreiben, nachdem man einen funktionierenden COde hat.
+Und wenn der Abgabetermin näher rückt, wird die Versuchung groß, etwas Zeit zu sparen, indem man diesen zusätzlichen, scheinbar unnötigen Schritt vermeidet.
+Dies ist, meiner persönlichen Meinung nach, ein wichtiger Grund, den Test-First-Ansatz zu verfolgen.
+
+[.text-justify]
+In manchen Fällen, zum Beispiel bei der Arbeit an Legacy Code ist der "Test Last" Ansatz die einzig mögliche Vorgehensweise, der der Code bereits existiert.
+
+==== 4.1.2 Test First Development
+
+[.text-justify]
+Das Schreiben der Tests vor dem eigentlichen Code veranlasst die Entwickler, über das Verhalten des getesteten Objekts nachzudenken und nicht über seine Implementierung, die zu diesem Zeitpunkt ja noch nicht existiert.
+Es reduziert die Funktionalität jeder implementierten Klasse auf das durch die Testfälle bestimmte Minimum, es werden keine überflüssigen Funktionalitäten hinzugefügt.
+Dies führt auch zu einer sehr hohen, wenn auch nicht 100%igen, Codeabdeckung.
+Dies ist im Allgemeinen wünschenswert.
+Dieser Ansatz kan auf jeder Testebene angewendet werden.
+Insbesondere ist er für Unit-Tests sehr beliebt und geeignet.
+
+==== 4.1.3 Immer, nachdem ein Bug gefunden wurde
+
+[.text-justify]
+Das Erste, was Sie tun sollten, nachdem Sie einen Fehler gefunden haben, ist, Ihren natürlichen Drang zu zügeln, ihn sofort zu beheben.
+Wenn Sie ihn "einfach so" beheben, verpassen Sie eine Gelegenheit, ihn ein für alle Mal loszuwerden.
+Der Fehler kann später wieder auftauchen, weil jemand die Änderung rückgängig gemacht hat, zum Beispiel bei der Behebung eines anderen Fehlers.
+Wenn Sie aber einen Test schreiben, bevor Sie den Fehler beheben, stärken Sie ihr Sicherheitsnetz aus Tests und derselbe Fehler wird nicht wieder auftreten.
+
+[.text-justify]
+Unabhängig davon, ob Sie Test-First oder Test-Last programmieren, sollten SIe sofort nach dem Auftreten eines Fehlers einen Test schreiben.
+Der Test sollte den Fehler aufdecken, dh.h. er sollte erwarten, dass das Richtige passiert, in diesem Fall also fehlschlagen, und somit das fehlerhafte Verhalten wiederholen.
+Danach sollten Sie den Code so korrigieren, dass der Test erfolgreich ist.
+
+[.text-justify]
+Wenn man darüber nachdenkt, werden Sie feststellen, dass das Schreiben eines Tests, nachdem ein Fehler gefunden wurde, eigentlich einem Test-First-Ansatz entspricht.
+Sie schreiben einen Test, der fehlschlägt, weil man den Fehler ja nachahmen möchte, und dann implementiert man den Code korrekt um den Test bestehen zu lassen.
+
+[.text-justify]
+Das große Problem dabei ist, den Fehler genau zu lokalisieren, so dann Sie einen Unit-Test schreibe könne, der diesen aufdeckt.
+Das kann wirklich schwierig sein.
+Es kann sein, dass mehrere Fehler in Ihrer Geschäftslogik auftauchen, während Sie auf die Benutzeroberfläche Ihrer Anwendung klicken.
+Es ist nicht so einfach, genau zu sagen, welche Klasse für ein bestimmtes fehlerhaftes Verhalten verantwortlich ist.
+In der Regel wird dieses Problem dadurch gelöst, dass zunächst ein übergeordneter Test, d.h. ein End-To-End-Test, geschrieben wird und dann nach und nach Informationen über die Ursache gesammelt werden, wobei das Suchfeld durch das Schreiben gezielterer Test eingegrenzt wird: zunächst Integrations- und dann schließlich Unit-Tests.
+
