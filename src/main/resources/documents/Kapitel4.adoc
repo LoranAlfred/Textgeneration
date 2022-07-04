@@ -109,3 +109,203 @@ Es kann sein, dass mehrere Fehler in Ihrer Geschäftslogik auftauchen, während 
 Es ist nicht so einfach, genau zu sagen, welche Klasse für ein bestimmtes fehlerhaftes Verhalten verantwortlich ist.
 In der Regel wird dieses Problem dadurch gelöst, dass zunächst ein übergeordneter Test, d.h. ein End-To-End-Test, geschrieben wird und dann nach und nach Informationen über die Ursache gesammelt werden, wobei das Suchfeld durch das Schreiben gezielterer Test eingegrenzt wird: zunächst Integrations- und dann schließlich Unit-Tests.
 
+=== 4.2 TDD Rhythmus
+
+[.text-justify]
+Das Schöne am Test-First Ansatz ist, dass sie aus ein paar sehr einfachen Schritten besteht, die immer und immer wieder wiederholt werden.
+Und - was beim ersten Mal ziemlich überraschen ist - diese einfachen Schritte führen zu einer großartigen Kodierungserfahrung und großartigen Ergebnissen.
+Pure Magie, nicht wahr?
+
+[.text-justify]
+Werfen wir einen Blick auf die stark vereinfachte Abbildung.
+Sie zeigt nicht die ganze Wahrheit.
+Doch im Verlauf dieses Kapitels werden wir es noch um einige Details erweitern.
+Es handelt sich aber dennoch um eine Abbildung, die man sich zu Beginn gerne über dem Schreibtisch aufhängen sollte.
+Es beschreibt nämlich den Rhythmus Ihrer Arbeit.
+
+1. Man schreibt einen Test der fehlschlägt (Rot)
+
+2. Korrigieren sie den Code, sodass der Test erfolgreich verläuft (Grün)
+
+3. Beseitigen Sie Redundanzen (REFACTOR)
+
+[.text-justify]
+Hierbei handelt es sich auch um eine einfache Regel, die Sie befolgen sollten.
+Schreiben Sie niemals Code ohne einen fehlgeschlagenen Test.
+
+:figure-caption: Abbildung
+.Der TDD Rhythmus
+image::/Users/aloran/ownprojects/Textgeneration/src/main/resources/pictures/TDD Rhythmus.png[Der TDD Rhythmus,align="center"]
+
+[.text-justify]
+Die nächste Abbildung gibt einen erweiterten Einblick in den TDD-Rhythmus.
+Es zeigt, wie man mit einer Liste von Tests beginnt, einen davon auswählt und dann dem Rot-Grün-Refactor Zyklus folgt, um sicherzugehen, dass man am Ende bei grün landet.
+
+[.text-justify]
+Die gesamte Arbeit ist abgeschlossen, d. h. eine bestimmte Funktionalität ist implementiert, wenn keine Tests mehr geschrieben werden müssen.
+
+:figure-caption: Abbildung
+.Der TDD Rhythmus erklärt
+image::/Users/aloran/ownprojects/Textgeneration/src/main/resources/pictures/TDDRhythmusErklaert.png[Der TDD Rhythmus erklärt,align="center"]
+
+[.text-justify]
+In den nun folgenden Abschnitten werden wir jeden Schritt des Rhythmus genauer betrachten.
+
+==== 4.2.1 ROT - Schreibe einen Test der fehlschlägt
+
+[.text-justify]
+Überlegen Sie sich eine Funktionalität, die implementiert werden sollte und schreiben Sie diesen in Form eines Tests auf.
+Diese Funktionalität ist noch nicht implementiert, sodass der Test unweigerlich fehlschlagen wird.
+Das ist an dieser Stelle auch das gewünschte Verhalten.
+Somit weis man nun:
+
+[.text-justify]
+* die Funktionalität funktioniert wirklich nicht,
+
+[.text-justify]
+* sobald diese Implementiert ist, werden Sie es sehen, weil das Testergebnis von rot auf grün wechselt.
+
+[.text-justify]
+Am Anfang mag es Ihnen unangenehm sein, Tests zu Funktionalitäten zu schreiben, die gar nicht vorhanden sind.
+Es erfordert eine geringfügige Änderung Ihrer Programmiergewohnheiten, aber nach einiger Zeit werden SIe es als eine großartige Gelegenheit für das Design sehen.
+Wenn Sie zuerst Tests schrieben, haben Sie die Chance, eine API zu erstellen, die für einen Kunden bequem zu benutzen ist.
+Ihr Test ist der erste Client für diese neu entstandene API.
+Genau darum geht es bei TDD: Um den Entwurf einer API.
+
+[.text-justify]
+Wenn Sie wie ein Kunde Ihres eigenen, bald zu schreibenden Codes denken, sollte Sie sich auf das konzentrieren, was wirklich erforderlich ist.
+Sie müssen sich Fragen stellen wie "Brauche ich wirklich diesen Getter", der die Sammlung zurückgibt, oder wäre es bequemer, eine Methode zu haben, die das größte Element dieser Sammlung zurückgibt?
+Und diese Fragen können Sie nur beantworten, indem Sie Tests schreiben.
+Hierdurch entstehen keine unnötigen Methoden mehr, die geschrieben werden, weil sie "vielleicht irgendwann einmal für jemanden nützlich sein könnten", keine automatisch generierten Setter/Getter mehr, wenn eine unveränderliche Klasse viel besser geeignet ist.
+Konzentrieren Sie sich auf das was der Kunde (der Testcode) wirklich braucht.
+Und schrieben Sie Tests, die genau das testen, und nicht mehr!
+
+[.text-justify]
+Wenn Sie zuerst einen Test schreiben, müssen Sie in Bezug auf die API des Objekts denken.
+Sie werden noch nicht wissen, wie die Implementierung aussehen wird, auch wenn Sie eine Vorstellung hiervon haben.
+Das ist auch gut so.
+Es bedeutet, dass Ihre Tests mehr Chancen haben das externe Verhalten des objekts zu testen und nicht seine Implementierungsdetails.
+Dies führt zu besser wartbaren Tests, die nicht untrennbar mit der Implementierung verbunden sind.
+
+[.text-justify]
+Natürlich können Sie den Test nicht direkt nach dem Schreiben ausführen.
+Warum?
+Wenn Sie wirklich die Regel "Schreibe niemals Code ohne einen fehlgeschlagenen Test" befolgen, dann würde Ihr Test einige nicht existierende Klassen und Methoden verwenden.
+Er ließe sich einfach nicht kompilieren.
+Als Teil dieses ersten Schritts müssen Sie also auch dafür sorgen, dass der Test kompiliert wird.
+Normalerweise lässt sich das durch eine vernünftige IDE einfach lösen, indem man eine (leere) Standardimplementierung von Klasse un dMethoden erstellt, die vom Testcode verwendet werden.
+
+===== 4.2.1.1 Wie man den nächsten zu schreibenden Test auswählt
+
+[.text-justify]
+Jemandem zu sagen, dass man einfach losgehen und einen fehlgeschlagenen Test "einfach so" schreiben soll, ist irgendwie unfair.
+Es hört sich einfach an, aber wie soll man vorgehen?
+Nehmen wir an, wir haben eine Liste von Funktionalitäten, die implementiert werden sollen und eine Liste von Tests, die diese abdecken.
+Die Frage, mit der wir uns jetzt beschäftigen müssen, ist, wie wir den ersten Test auswählen.
+Und wie geht man dann, nachdem man ihn implementiert und den TDD Zirkel mit der Implementierung des Codes und dem Refactoring abgeschlossen hat, mit dem nächsten Test um?
+Und der Nächste?
+
+[.text-justify]
+Hierbei handelt es sich um ein Standardproblem und, soweit ich weiß, gibt es keine "Standard"-Lösung.
+Es gibt keine Heuristik, die allgemein als der richtige Weg anerkannt ist, um den nächsten zu implementierenden Test zu bestimmen.
+Es gibt jedoch einige Tipps in der Community, die hilfreich sein könnten.
+Diese werden nun im Detail beschrieben.
+
+[.text-justify]
+*Die niedrig hängende Frucht* (Low-Hanging Fruit).
+Diese Regel besagt: "Beginne mit etwas wirklich Einfachem.
+Implementiere einen offensichtlichen Testfall."
+
+[.text-justify]
+Diese Technik ist besonders nützlich, wenn man nicht weiterkommt.
+Etwas zu schreiben, auch wenn es trivial oder nur von geringer Bedeutung ist, kann hilfreich sein, um diese Art von "Schreibblockade" zu überwinden.
+Wenn man sich nicht sicher ist, welche Tests zu schreiben sind und wie sich die getestete Methode verhalten soll, ist der erste Schritt vielleicht das Beste, was man tun kann.
+Selbst wenn die auf diese Weise implementierte Funktionalität nicht so wichtig ist, werde dadurch zumindest einige teile des Puzzles zusammengesetzt.
+Das hilft jemandem, um weiterzukommen.
+
+[.text-justify]
+Ein Beispiel für das Schreiben eines einfachen Testsfalls, um den Einstieg zu erleichter, wäre:
+
+[.text-justify]
+* das Schreiben eines Tests zur Überprüfung von Parametern für eine Funktion
+
+[.text-justify]
+* das Schreiben eines Parsers.
+Man beginnt mit dem Testfall der Übergabe eines leeren Strings an die Parsing Methode und erwartet als Rückgabewert null zu erhalten.
+
+[.text-justify]
+In keinem der beiden Fälle würde man die, wahrscheinlich recht komplexe Hauptlogik anfassen, die getestet und implementiert werden muss.
+Man würde jedoch einen Einblick in Klassen und Methoden erhalten, die die eigentliche Aufgabe bereitstellen.
+Dies kann seht nützlich sein, wenn man zu dem Zeitpunkt einfach nicht mehr weiter weiß.
+
+[.text-justify]
+*Der Informativste* Ein anderer Ansatz besteht darin, mit dem Test zu beginnen, der einem die meisten Informationen über die zu implementierende Information liefert.
+Das ist so, als würde man den Ball mit dem Sweet Spot treffen: Er liefert den größtmöglichen Erkenntnisgewinn.
+
+[.text-justify]
+Das bedeutet jedoch in der Regel, sich den schwierigsten Dilemmas zu stellen.
+Aber man muss sich ja eh mit ihnen auseinandersetzen.
+Warum also nicht einfach direkt ins Geschehen einsteigen, anstatt sich im Kreis zu drehen?
+
+[.text-justify]
+TIP: Das ist so, als würde man sagen: "Es spielt keine Rolle, das ich im ersten Spiel gegen den Weltmeister antrete, wenn ich das ganze Turnier gewinnen möchte, muss ich ihn eh schlagen." Manche Personen mögen diese Art der Motivation.
+
+[.text-justify]
+Alles schön und gut, aber haben wir nicht gerade ein Rätsel mit einem anderen Rätsel beantwortet?
+Die Frage ist nun, woher weis man welcher Test das meiste Wissen über die implementierende Funktionalität liefert?
+Nun, das ist gar nicht so schwer zu beantworten.
+Dies ist wahrscheinlich der Test, von dem man weiß, dass man noch nicht weiß, wie man diesen besteht.
+Man merkt es ziemlich schnell welcher das sein wird.
+
+[.text-justify]
+Hätte man im Falle des vorangegangenen Parser-Beispiels diesen Ansatz gewählt, hätte man wahrscheinlich mit dem Parsen eines ganzen Satzes begonnen.
+Dadurch würde man sicherlich viel über die implementierende Funktionalität lernen.
+
+[.text-justify]
+*Erst der typische Fall, dann die Grenzfälle*.
+Es erscheint durchaus sinnvoll, mit einem "typischen Fall" zu beginnen.
+Man überlegt sich einfach, wie man selbst erwarten würde, wie eine Funktion am häufigsten verwendet wird.
+Wenn man beginnt einen Tokenizer zu schreiben, beginnt man mit einem gültigen Satz als Eingabe.
+Wenn man einen Verkaufsautomaten implementiert, beginnt man mit einem Kunden, der eine 1 € Münze einwirft und ein Produkt aus dem Angebot des Automaten auswählt.
+Später werden denn die Grenzfälle implementiert.
+
+[.text-justify]
+Außerdem garantiert dieser Ansatz, dass man von Anfang an etwas Wertvolles in Arbeit hat.
+Selbst, wenn man vom Computer weggezerrt werden sollte, hat mein bereits etwas implementiert, was für die Kunden des SUT nützlich ist.
+
+[.text-justify]
+TIP: Ich selbst verfolge meist diesen Ansatz
+
+[.text-justify]
+*Hören Sie auf Ihre Erfahrung*: Der wahrscheinlich wertvollste Weg, mit dem Dilemma des "nächsten Tests" umzugehen, ist, auf die eigene Erfahrung zu hören.
+Diese sollte einem sagen, welcher der oben genannten Ansätze für diesen speziellen Fall am besten geeignet ist.
+
+[.text-justify]
+*Lesbare Assertion Nachricht*
+
+[.text-justify]
+Nachdem man einen fehlgeschlagenen Test gefunden hat und bevor man mit der Implementierung von Code beginnt, um den fehlgeschlagenen Test zu beheben, ist es ratsam, sich um weitere Details zu kümmern: Stelle immer sicher, dass die Meldungen vom fehlgeschlagenen Test, auch aussagekräftig genug sind um den Fehler herauszufinden.
+Ist dies nicht der Fall, bearbeitet man die Fehlermeldung, bis diese zufriedenstellend ist.
+
+==== 4.2.2 GRÜN - Schreibe das Einfachste, was funktioniert
+
+[.text-justify]
+Da man nun einen fehlgeschlagenen Test sowie eine klare Assertion-Meldung hat, ist der nächste Schritt den Test zum Bestehen zu bringen.
+Natürlich gelingt dies nur durch das Schreiben von Code!
+
+[.text-justify]
+Der Punkt ist es hierbei aber nicht zu übertreiben.
+Es geht darum *die kleinste Menge an Code zu schreiben, die den Test erfüllt*.
+Man hat sich auf die eigentliche Aufgabe zu konzentrieren.
+Und diese lautet: "Mach den Balken grün".
+Das war es auch.
+Denke nicht zu viel über Erweiterungen nach.
+Das interessiert zu diesem Zeitpunkt nicht.
+Mach den fehlgeschlagenen Test grün, nichts weiter.
+Ganz gewiefte sagen nun: "Pff, dann deklariere ich die Methodensignatur und schreibe nichts in den Methodenrumpf rein.
+Dann ist der Test auch grün".
+Dem entgegne ich persönlich dann: "...hör auf in der Informatik zu arbeiten und mach was wo Faken gern gesehen ist.
+BWL zum Beispiel." Der Grund ist: "DU TESTEST NICHT!"
+
+[.text-justify]
+Denk daran, dass es weitere Tests geben wird. Diese werden dann die anderen Anforderungen abdecken. Und wenn die Zeit gekommen ist, hat man alle Funktionen hinzugefügt, die man sich im Kopf ausgedacht hat.

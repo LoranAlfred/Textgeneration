@@ -3,7 +3,7 @@ Alfred Loran <loranalf@googlemail.com>
 :source-highlighter: highlight.js
 :table-caption: Table
 :toc:
-:toclevels: 4
+:toclevels: 5
 :toc-title: Inhaltsverzeichnis
 
 include::/Users/aloran/ownprojects/Textgeneration/src/main/resources/documents/Kapitel1.adoc[]
