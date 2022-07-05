@@ -308,4 +308,241 @@ Dem entgegne ich persönlich dann: "...hör auf in der Informatik zu arbeiten un
 BWL zum Beispiel." Der Grund ist: "DU TESTEST NICHT!"
 
 [.text-justify]
-Denk daran, dass es weitere Tests geben wird. Diese werden dann die anderen Anforderungen abdecken. Und wenn die Zeit gekommen ist, hat man alle Funktionen hinzugefügt, die man sich im Kopf ausgedacht hat.
+Denk daran, dass es weitere Tests geben wird.
+Diese werden dann die anderen Anforderungen abdecken.
+Und wenn die Zeit gekommen ist, hat man alle Funktionen hinzugefügt, die man sich im Kopf ausgedacht hat.
+
+==== 4.2.3 REFACTOR - Verbessere den Code
+
+[.text-justify]
+Die Frage ist, ob das Hinzufügen einfacher Funktionen nach und nach nicht dazu führt, dass der endgültige Code wie ein Haufen von wahllos eingeordneter Elemente aussieht.
+Der Code wird funktionieren, aber wird der Code einfach zu verbessern sein?
+Wird er flexibel sein?
+Wird er OOP Prinzipien KISS, DRY, SRP und andere Einhalten?
+Und so gelangen wir zum nächsten Schritt des TDD-Rhythmus: Refactoring.
+
+[.text-justify]
+Sobald der Test bestanden ist, können nun Änderungen am Code vorgenommen werden.
+Das Sicherheitsnetz, das es nun durch die Tests gibt, gibt einem nun die Gewissheit, dass man nicht mehr kaputt machen kann, solange der Balken grün bleibt.
+Ändere Methodennamen, aktualisiere den Geltungsbereich von Variablen, verschiebe Teile von einem zum anderen Ort.
+Führe die Tests oft genug aus.
+Sie werden sofort mitteilen, ob und welchen Schaden das Refactoring angerichtet hat.
+
+[.text-justify]
+Weswegen ist dieser Schritt erforderlich?
+Wie manche Leute sagen: "Wenn es funktioniert, brauchst du es nicht zu reparieren" - warum sollten man sich mit dieser Aufgabe belasten?
+Die Antwort ist, dass man sich während des vorangegangenen Schritts, lediglich auf das Erfüllen des Tests konzentriert hat und der implementierte Code möglicherweise nicht klar genug ist.
+Er funktioniert zwar, kann aber ein Albtraum in der Wartung sein.
+Und darüber hinaus hat man in der Programmierung von "nur so viel, wie nötig ist, um den Test zu bestehen" nur an dieses Stück Code gedacht.
+Jetzt ist es aber an der Zeit, das Gesamtbild zu betrachten und den gesamten Code zu überarbeiten, nicht nur die paar Zeilen, die man vor einigen Minuten geschrieben hat.
+Vielleicht gibt es nun einige Redundanzen, vielleicht sollte einige Funktionen in eine private Funktion verschoben werden, vielleicht sollten einige Variablen umbenannt werden.
+Jetzt ist es an der Zeit dies zu tun.
+
+[.text-justify]
+TIP: Wenn man ein "Refactoring" durchgeführt hat und die Tests trotzdem bestanden wurden, aber die Anwendung nun nicht mehr funktioniert, bedeutet dies, dass man nicht wirklich ein Refactoring durchgeführt hat.
+Man hat nur den Code geändert.
+Refactoring bedeutet, sich über ein Sicherheitsnetz von Tests zu bewegen.
+Es bedeutet, mit Code zu arbeiten, der gründlich getestet ist.
+Man ist unfair gegenüber dem "Refactoring", wenn man es beschuldigt etwas kaputt gemacht zu haben.
+Man hat es einfach selbst schlecht gemacht.
+Was bedeutet man hat nicht genug getestet.
+
+[.text-justify]
+*Tests Refaktorieren*
+
+[.text-justify]
+Sollte man auch Tests refaktorieren?
+Ja!
+Das sollte man!
+Betrachte Tests wie ein wertvolles Gut.
+Man wird diese häufig lesen und aktualisieren.
+Sie sind das Fundament, auf dem man den Code aufbaut und als solches sollten diese robust und von höchster Qualität sein.
+Die Qualität des Codes hängt stark von den Tests ab, daher vertraue darauf, dass diese wirklich gut sind.
+
+[.text-justify]
+Beim Refactoring wird der Code umstrukturieren, ohne seine Funktionalität zu verändern.
+In Bezug auf Tests bedeutet dies, dass die refaktorisierten Tests dieselben Methoden aufrufen, dieselben Argumente verwenden und dieselben Assertions überprüfen, wie man es vor Beginn des Refactorings getan hat.
+
+[.text-justify]
+Ein offensichtliches Problem beim Refactoring von Tests ist, dass es keine Tests für die Tests selbst gibt, sodass man aus versehen einige unerwünschte Änderungen eingeführt hat, anstatt ein Refactoring durchzuführen.
+Diese Gefahr besteht, ist aber nicht so ernst, wie es auf den ersten Blick scheinen mag.
+Zunächst einmal sind Unit-Tests, wenn sie richtig geschrieben sind, wirklich einfach.
+Sie enthalten keine komplexe Logik, die bei Änderungen zum Zusammenbruch führen könnte.
+Beim Refactoring von Tests geht es eher darum, Dinge zu verschieben - zum Beispiel das Verschieben einiger allgemeiner Funktionen in Setup-Methoden.
+Wenn man etwas falsch macht, ist es sehr wahrscheinlich, dass der grüne Balken auf rot wechselt und einen sofort darauf hinweist, dass etwas schief gelaufen ist.
+
+[.text-justify]
+Zusammenfassend lässt sich sagen, dass man mit vorsicht vorgehen, aber keine Angst vor dem Refactoring ansich haben sollte.
+Man sollte sich immer vergewissern, dass sich die Anzahl der ausgeführten Tests nicht geändert hat und wenn man sich mit den beim Refactoring eingeführten Änderungen nicht sicher fühlt, kann man immer noch einen Blick auf den Codeabdeckungsbericht werfen.
+
+[.text-justify]
+*JavaDocs anfügen*
+
+[.text-justify]
+Während einer Refactoring-Phase sollte man sich auch um die JavaDocs kümmern, sowohl für den Produktionscode als auch für die Tests.
+Das wirft aber zwei Probleme auf:
+
+[.text-justify]
+1. Das Design ist noch nicht festgelegt.
+Hat es einen Sinn, jetzt eine Dokumentation zu schreiben, wenn die Dinge vielleicht noch geändert werden?
+
+[.text-justify]
+2. Die Dokumentation jetzt zu schreiben, kann den Gedankenfluss stören.
+Das Gehirn konzentrieren sich bereits auf den nächsten Test, der geschrieben werden muss.
+Ist es eine gute Idee, diesen sogenannten "Fluss" zu unterbrechen und sich einer anderen Tätigkeit zuzuwenden?
+
+[.text-justify]
+TIP: Diese berechtigte Fragen werden durch die natürliche Abneigung der Entwickler gegen das Schreiben von Dokumentationen noch verstärkt.
+Dies führt dazu, dass die Erstellung der Dokumentation aufgeschoben wird, was wiederum dazu führt, dass es überhaupt keine Dokumentation gibt. kurzfristig scheint das wirklich cool zu sein, aber langfristig ist das tödlich.
+
+[.text-justify]
+Folgendes schlage ich persönlich aus Erfahrung vor:
+
+[.text-justify]
+1. Fasse dich Kurz.
+So tut es weniger weh.
+Schreibe nur über den geschäftlichen Zweck der Klassen und Methoden und über alle wichtigen Designentscheidungen.
+
+[.text-justify]
+2. Wenn man den Codefluss wirklich nicht unterbrechen will, hinterlasse eine Notiz für dich selbst.
+Sogenannte TODOs.
+Die Dokumentation, vor allem die JavaDoc, sollte nie vergessen werden.
+
+[.text-justify]
+IMPORTANT: Vergesse niemals, dass man Code schreiben sollte der sich selbst dokumentiert.
+Verwende beschreibende Methodennamen und schreibe gute und lesbare Tests.
+Dann kann man auf das Schreiben von JavaDocs auch verzichten (außer einige Erklärungen auf höherer Ebene).
+Dies ist der erstrebenswerte Zustand.
+Aber, wie in jeder Programmiersprache, sind semantische Beschreibungen im Code begrenzt.
+Daher wird sich das nie zu 100 % erreichen lassen können.
+
+==== 4.2.4 Und nochmal von vorne
+
+[.text-justify]
+Führe, nach der Umstrukturierung des Codes, die Tests erneut durch, um sicherzustellen, dass keine Schäden entstanden sind.
+Denke daran ALLE Unit-Tests auszuführen, nicht nur die an denen man kürzlich gearbeitet hat.
+Unit-Tests werden schnell ausgeführt.
+Man gewinnt keine Zeit, wenn man nur ausgewählte Tests ausführt.
+Führe alle Tests aus, stelle fest, dass sie erfolgreich sind und dann kann man mit dem nächsten Test fortfahren.
+Wiederhole den Vorgang so lange, bis keine Tests mehr schrieben werden müssen.
+
+=== 4.3 Vorteile
+
+[.text-justify]
+_"TDD hilft bei gutem Design und gutem Code, ist aber keine Garantie dafür.
+Geschick, Talent und Fachwissen sind weiterhin erforderlich"_ - Esko Luontola
+
+[.text-justify]
+Nun kennt man die Theorie hinter dem TDD Zyklus:
+
+[.text-justify]
+- Der gesamte Code (hiermit ist nicht gemeint setter, getter und sonstiges triviales was eher die Programmiersprache selbst als die gewünschte Funktionalität testet) wird durch Unit-Tests abgedeckt.
+
+[.text-justify]
+- der Code ist so geschrieben, dass er die Tests erfüllt und es keine überflüssigen Teile im Code gibt, die nur deshalb geschrieben wurden, weil sie "möglicherweise" nützlich sein könnten
+
+=== 4.4 Wie man mit TDD beginnt
+
+[.text-justify]
+_"Wir alle sind gleich.
+Unter Druck fallen wir auf das zurück, was wir kennen.
+Treten beim TDD Probleme auf, hören Entwickler auf, Tests zu schreiben"_ - Ian Cooper
+
+[.text-justify]
+Nun haben wir also so einiges über den TDD Ansatz gesprochen.
+Er scheint zu Beginn ein wenig umständlich zu sein, aber gleichzeitig erweist er sich auch als sinnvoll.
+Vielleicht hat man von einigen großartigen Programmierern gehört, die Tests vor dem Code schreiben.
+Vielleicht hat man von einigen Projekten gehört, die nach dem TDD Prinzip entwickelt wurden und für eine hohe Codequalität bekannt sind.
+Eventuell hat man im eignen Betrieb auch gehört, dass andere Teams TDD erfolgreich in den Entwicklungsprozess integriert haben und nun überlegt man sich selbst dies zu tun.
+
+[.text-justify]
+Und du versuchst es nun tatsächlich bei deiner nächsten Aufgabe umzusetzen.
+Und es fühlt sich an wie....wie der versuch, eine Wand mit dem eigenen Kopf zu durchbrechen!
+Datenbanken, Spring-Kontexte, statische Klassen, ORM-Tools, JNDI-Aufrufe, Webdienste, globale Variablen, tiefe Vererbungshierarchien und Konsolenausgaben springen einem auf einmal entgegen.
+Nichts sieht auch nur im Ansatz so aus wie die Test-First-Tutorials die man sich auf Youtube angeschaut hat.
+Keiner der guten Ratschläge, die man bekam, scheinen zu helfen.
+Es ist schlichtweg unmöglich weiterzumachen!
+
+[.text-justify]
+Aber natürlich gibt man sich nicht kampflos geschlagen.
+Mühsam und mit zusammengebissenen Zähnen überwindet man ein Problem nach dem anderem.
+Das benötigt Zeit...viel Zeit.
+Foren und Blogs scheinen auf einmal sehr sehr gute Freunde zu werden.
+Am Ende des Tages schaut man auf seinen Code und denkt sich nur noch...okay...viele Zeilen sind das ja nicht gerade, die da geschrieben wurden.
+Mit dem Code-first-Ansatz ist man es gewöhnt ungefähr 10 Mal mehr zustande gebracht zu haben.
+Man ist nicht einmal stolz auf die eigenen Tests, weil man weiß, welche Dirty Hacks man verwendet hat, um sie zum Laufen zu bekommen.
+So zumindest erging es mir bei meiner ersten Begegnung mit TDD.
+
+[.text-justify]
+Bevor man nun in tiefer Verzweiflung versinkt, hier einige, sehr hart erlernte und wirklich gut gemeinte Ratschläge.
+Lieber TDD-Wannabe-Programmierer.
+Du hast versucht zu viel auf einmal zu machen!
+Du hast versucht deine Gewohnheit zu ändern, was ansich schon schwer genug ist, und gleichzeit auch mehrere Probleme zu lösen, die in der Codebasis existieren.
+Selbst wenn man einige Tests hatte, was ich zumindest stark hoffe, so wurde der Code mit ziemlicher Sicherheit nie mit einem Blick auf Testbarkeit geschrieben.
+Der Versuch neue Funktionen auf testorientierte Weise hinzuzufügen, ist wie eine Herausforderung für die alte Codebasis.
+Sie wird sich wehren!
+Sie wird versuchen deine Bemühungen zu vereiteln.
+Dieselben Lösungen, auf die man zuvor recht stolz war, sind schlimmstenfalls die, die dich jetzt daran hindern weiterzukommen.
+Im allerschlimmsten Fall wird dein Pull-Request von einem Kollegen declined, weil er nicht dem gewohnten Code entspricht.
+
+[.text-justify]
+Doch wie kam ich selbst aus der Bredouille?
+Indem ich das begonnen habe, was TDD selbst fördert.
+Das Arbeiten in ganz kleinen Schritten.
+Beginne mit den einfachsten Dingen.
+Implementiere einfache Aufgaben mit dem Test-First-Ansatz.
+Freue dich über jeden TDD Erfolg.
+Lerne zeitgleich aber von jedem TDD Misserfolg.
+Findet man etwas, was sich mit dem TDD Ansatz nicht bewältigen lässt so mache dir nicht zu viele Gedanken darüber.
+Nach ein paar Wochen bist du in der Lage auch diese Herausforderung zu meistern.
+Baue deine Erfahrung in kleinen Schritten auf.
+Auf diese Weise wird es mit der Zeit funktionieren.
+Ich selbst bin der Beweis!
+
+[.text-justify]
+Es wird von Tag zu Tag einfacher werden.
+Erstens, weil man selbst immer besser wird.
+Zweitens aber, hört man auf Dinge zu tun, die man bisher gemacht hat und beginnt seinen Fokus auf den Test zu legen.
+Drittens ist der Entwurf nun auch viel besser und somit die nächsten Teile des Codes leichter testbar.
+Viertens, und damit hat man es dann auch wirklich geschafft, einige Teamkollegen haben sich dir angeschlossen und produzieren nicht mehr "einen Haufen Scheiße" die sich nicht testen lässt.
+
+=== 4.5 Wann sollte man TDD nicht verwenden?
+
+[.text-justify]
+TDD funktioniert hervorragend.
+Es ist auch sehr wahrscheinlich, dass du, wenn du es erst einmal im Griff hast, nur noch ungern auf eine andere Weise coden möchtest.
+Es gibt jedoch Umstände, unter denen dieser Ansatz nicht die beste Option zu sein scheint.
+
+[.text-justify]
+Wie im vorherigen Abschnitt erläutert, ist es wirklich nicht ratsam ins kalte Wasser zu springen.
+Auch wenn man ein guter Programmierer ist kann es durchaus sein, dass man noch nicht dafür bereit ist reale Programmieraufgaben nach dem TDD Ansatz zu lösen.
+Beginne mit etwas Einfachem.
+Sammle Erfahrungen und nutze es dann erst.
+
+[.text-justify]
+Dass bedeutet, das die erste Anti-Test-First Situation darin besteht, alle möglichen Probleme gleichzeitig in Angriff zu nehmen, während es an Erfahrung, Fähigkeiten und Vertrauen in diese mangelt.
+Tue das auf gar keinen Fall!
+
+[.text-justify]
+Und selbst dann, wenn man einige Erfahrung gesammelt hat, wird TDD immer noch einen etwas behindern.
+Wie Kent Beck, der versucht hat, ein neues Eclipse Plugin zu implementieren, ohne sich mit der Technologie auszukennen, einmal geschrieben hat: _"Sechs oder acht Stunden lang, verteilt über die nächsten Wochen, kampfe ich darum, den ersten Test zu schreiben und zum Laufen zu bekommen. [...] Hätte ich einfach etwas geschrieben und es von Hand überprüft würde ich wahrscheinlich schon die endgültige Antwort darauf haben, ob meine Idee ihr Geld auch wert ist.
+Stattdessen habe ich nur einen komplizierten Test, der nicht funktioniert, einen Haufen Frust und acht Stunden weniger Lebenszeit [...]."_ - Ken Beck, Just Ship, Baby (2009).
+
+[.text-justify]
+Das Schreiben von Tests erfordert in der Regel ein gutes Verständnis der verwendeten Technologien und Kenntnisse über den Problembereich.
+Fehlen einem diese Kenntnisse, ist es besser mit dem Code First Ansatz zu beginnen.
+Vor allem, wenn man im Moment nicht die Zeit hat sich diese anzueignen.
+Man Weis, dass man die Zeit damit verbringen muss, sich in ein noch unbekanntes Test-Framework einzuarbeiten anstatt echten Code zu schreiben.
+Wie immer sollte hier der gesunde Menschenverstand einsetzen und einen aus den eigenen Fehlern lernen lassen.
+
+[.text-justify]
+Ein weiteres Hindernis für den TDD Ansatz ist legacy code.
+Es kann sein, dass du nicht in der Lage bist, TDD ohne ein ernsthaftes Refactoring anzuwenden.
+Du wirst aber auf ein Henne-Ei-Problem stoßen, weil ohne ein Sicherheitsnetz von Tests Refactoring schwer ist.
+
+[.text-justify]
+Hier sei aber eine Sache gesagt.
+Nach meiner Erfahrung gilt dies nur für Integrations-Tests.
+Für Unit-Tests gilt dies nicht.
+Es ist immer möglich, zumindest einige Zustandstests auf diese Weise durchzuführen.
+Was das Testen von Interaktionen zwischen Objekten betrifft, so ist dies manchmal deutlich schwieriger.
