@@ -1,7 +1,7 @@
 == 1 Arten von Entwicklungstests
 
 [.text-justify]
-Wenn wir ein Bild eines OO Systems vor Augen haben, können wir versuchen, die Teile des Systems zu visualisieren, die von jeder Testart betroffen sind.
+Wenn wir ein Bild eines OO-Systems vor Augen haben, können wir versuchen, die Teile des Systems zu visualisieren, die von jeder Testart betroffen sind.
 Dies hilft uns, den Umfang und den Zweck jeder Art von Entwicklertests zu verstehen.
 
 [.text-justify]
@@ -13,15 +13,15 @@ Normalerweise hat ein DOC die gleiche Granularität wie das SUT, d.h. wenn das S
 
 [.text-justify]
 In den folgenden Abschnitten werden die verschiedenen Testarten in aller Kürze vorgestellt.
-Es könnte noch viel mehr über jeden von ihnen gesagt werden, aber im Moment wollen wir uns auf das Bild des OO - Systems beschränken und einfach versuchen zu sehen, welcher Teil davon von jeder Art von Test abgedeckt wird.
+Es könnte noch viel mehr über jeden von ihnen gesagt werden, aber im Moment wollen wir uns auf das Bild des OO-Systems beschränken und einfach versuchen zu sehen, welcher Teil davon von jeder Art von Test abgedeckt wird.
 
 === 1.1 Unit Tests
 
 [.text-justify]
 Unit-Tests konzentrieren sich auf einzelne Klassen.
-Sie dienen dazu, sicherzustellen, dass Ihr Code funktioniert.
+Sie dienen dazu, sicherzustellen, dass dein Code funktioniert.
 Sie kontrollieren alle Aspekte des Kontexts in dem die zu testende Klasse statt durch reale Mitwirkende durch Test-Doubles ausgeführt wird.
-Diese wissen nicht über die Benutzer des Systems, die sie testen und haben keine Ahnung von Schichten, externe Systeme und Ressourcen.
+Diese wissen nichts über die Benutzer des Systems, die sie testen und haben keine Ahnung von Schichten, externe Systeme und Ressourcen.
 Sie laufen unglaublich schnell und werden häufig ausgeführt.
 
 :figure-caption: Abbildung
@@ -31,8 +31,8 @@ image::/Users/aloran/ownprojects/Textgeneration/src/main/resources/pictures/Unit
 === 1.2 Integration Tests
 
 [.text-justify]
-Integrationstests konzentrieren sich auf die korrekte Integration verschiedener Module Ihres Codes, auch, und das ist besonders wertvoll, mit Code, über den Sie keine Kontrolle haben.
-Ein Beispiel könnte eine Verbindung zwischen Ihren Geschäftsklassen und einem OSGI Container, ORM Framework oder einem Webservice-Framework sein.
+Integrationstests konzentrieren sich auf die korrekte Integration verschiedener Module Ihres Codes, auch, und das ist besonders wertvoll, mit Code, über den du keine Kontrolle hast.
+Ein Beispiel könnte eine Verbindung zwischen Geschäftsklassen und einem OSGI Container, ORM Framework oder einem Webservice-Framework sein.
 Obwohl die Integrationstests einen viel größeren Bereich des Codes abdecken als Unit-Tests, testen sie den Code immer noch so, wie er aus der Sicht des Entwicklers aussieht.
 
 [.text-justify]
@@ -45,19 +45,19 @@ Um die Ergebnisse von Integrationstests zu überprüfen, ist es oft notwendig, e
 image::/Users/aloran/ownprojects/Textgeneration/src/main/resources/pictures/IntegrationTestScope.png[Scope Integration Test,align="center"]
 
 [.text-justify]
-Wie die obige Abbildung zeigt, erstrecken sich Integrationstests in der Regel über mehrere Schichten, zum Beispiel, wenn Sie testen, ob ihre Dienste korrekt mit einer DAO Schicht zusammenarbeiten.
-Sie führen Code aus, der von Ihrem Team geschrieben wurde, aber auch Code aus Bibliotheken von Drittanbietern, die von der getesteten Anwendung verwendet werden.
+Wie die obige Abbildung zeigt, erstrecken sich Integrationstests in der Regel über mehrere Schichten, zum Beispiel, wenn du testest, ob deine Dienste korrekt mit einer DAO Schicht zusammenarbeiten.
+Sie führen Code aus, der von deinem Team geschrieben wurde, aber auch Code aus Bibliotheken von Drittanbietern, die von der getesteten Anwendung verwendet werden.
 Wie bei den Unit-Tests werden weite Bereiche des Systems von Integrationstests entweder nicht berührt oder durch Testdoubles ersetzt.
 Der Client ist daher nicht im Bild zu sehen.
 
 === 1.3 End-to-End Tests
 
 [.text-justify]
-End-To-End Tests dienen dazu, zu überprüfen, ob ihr Code aus der Sicht des Kunden funktioniert.
+End-To-End Tests dienen dazu, zu überprüfen, ob dein Code aus der Sicht des Kunden funktioniert.
 Sie stellen das System als Ganzes auf den Prüfstand und ahmen die Art und Weise nach, wie der Benutzer es benutzen würde.
 Diese erstrecken sich über alle Schichten.
 Testdoubles werden bei End-To-End Tests nur selten verwendet, hier geht es darum, das echte System zu testen.
-End-To-End Tests benötigen in der Regel eine beträchtliche Zeitspanne für ihre Ausführung.
+End-To-End Tests benötigen in der Regel eine beträchtliche Zeitspanne in ihrer Ausführung.
 
 :figure-caption: Abbildung
 .Scope eines End-to-End Tests
@@ -81,9 +81,9 @@ End-To-End Tests werden durch eine Anfrage ausgelöst, die identisch ist mit der
 Ein Konstruktor der Klasse Product soll eine IllegalArgumentException auslösen, wenn das Preisargument kleiner als 0 ist.
 
 |Integration Test
-| Ein Aufruf der Methode *deleteAccount()* der Klasse UserService mit einem argument ID des Wertes 1 sollte dazu führen, dass das Konto mit dieser ID aus der Datenbank entfernt wird.
+| Ein Aufruf der Methode *deleteAccount()* der Klasse UserService mit einem Argument ID des Wertes 1 sollte dazu führen, dass das Konto mit dieser ID aus der Datenbank entfernt wird.
 
-Wenn ein Element mit der ID = 5 zum zweiten Mal angefordert wird, sollte di eKlasse ItemDAO nicht auf die eigentliche Datenbank zugreifen, sondern das angeforderte Element stattdessen aus dem Cache abrufen.
+Wenn ein Element mit der ID = 5 zum zweiten Mal angefordert wird, sollte die Klasse ItemDAO nicht auf die eigentliche Datenbank zugreifen, sondern das angeforderte Element stattdessen aus dem Cache abrufen.
 
 ParcelService sollte mit einem Webdienst kommunizieren, um die Details des Pakets zu finden und eine E-Mail mit den entsprechenden Fehlerinformationen senden, wenn das Paket nicht gefunden wurde.
 
@@ -100,7 +100,7 @@ Wenn ein Benutzer seine Geodaten über einen WhatCityIsThis-Webdienst sendet, so
 Die Tabelle zeigt Beispiele von SUTs und DOCs für jeden Testtyp.
 Sie zeigt, wie SUT und DOCs "wachsen", wen man von Unit-Tests (kleiner) über Integrationstests (mittel) zu End-To-End-Tests (groß) übergeht.
 Der Unterschied in der Granularität ist deutlich sichtbar.
-Im Fall von Unit-Tests sind die SUTs und DOCs einfach Klassen. integrationstests agieren auf der Ebene von Modulen oder Schichten.
+Im Fall von Unit-Tests sind die SUTs und DOCs einfach Klassen. Integrationstests agieren auf der Ebene von Modulen oder Schichten.
 Bei End-To-End-Tests wird die gesamte Anwendung getestet (was die Anwendung selbst zu einem Sut macht), und andere Anwendungen sind Kollaborateure (DOCs).
 
 [cols="1,1,1"]
@@ -147,8 +147,8 @@ LDAP repository
 [.text-justify]
 Alle in den vorangegangenen Abschnitten vorgestellten Testarten sind wichtig.
 Aus der Sicht eines Entwicklungsteams hat jeder von ihnen ihren eigenen Wert.
-Unit-Tests tragen dazu bei, die Qualität des Codes zu gewährleisten, Integrationstests überprüfen, ob die verschiedenen Module effektiv zusammenarbeiten, währen End-To-End Tests das System auf Herz und Nieren prüfen, und zwar auf eine Weise, die den Standpunkt der Benutzer widerspiegelt.
-Je nach Art der Anwendung, die Sie implementieren, sind einige von ihnen möglicherweise besser geeignet als andere.
+Unit-Tests tragen dazu bei, die Qualität des Codes zu gewährleisten, Integrationstests überprüfen, ob die verschiedenen Module effektiv zusammenarbeiten, während End-To-End Tests das System auf Herz und Nieren prüfen, und zwar auf eine Weise, die den Standpunkt der Benutzer widerspiegelt.
+Je nach Art der Anwendung, die du implementierst, sind einige von ihnen möglicherweise besser geeignet als andere.
 
 [.text-justify]
 Eine andere Möglichkeit, die verschiedenen Testarten zu betrachten, besteht darin, sie auf einer Skala einzuordnen.
@@ -170,7 +170,7 @@ Bei schwer zu testendem Code greifen sie auf alle verfügbaren Techniken zurück
 Sie werden einige OO-Regen opfern, wenn sie glauben, dass sie das tun müssen, um ihren Heiligen Gral der Testbarkeit zu erreichen.
 Sie werden die Sichtbarkeit von Methhoden mithilfe von Reflection verändern oder Classloading Hacks verwenden, um mit finalen Klassen umzugehen.
 Auf diese Weise sind sie in der Lage, so ziemlich alles zu testen.
-Wenn man ihnen vorwirft "schmutzige Hacks" zu verwenden, zucken sie mit den Schultern und antworten, dass sie sich "nicht schmutzig fühlen, wenn sie bereits im Schlamm schwimmen".
+Wenn man ihnen vorwirft "schmutzige Hacks" zu verwenden, zucken sie mit den Schultern und antworten, dass sie sich "nicht schmutzig fühlen, wenn sie bereits im Schlamm schwimmen". Womit sie leider recht haben. Trotzdem ist der Ansatz fragwürdig.
 
 [.text-justify]
 Die andere Gruppe, nennen wir sie *Designer*, glaubt, dass das Befolgen von OO-Regeln das Wichtigste ist und dass dies zu leicht testbarem Code führt.
@@ -178,7 +178,7 @@ Sie betrachten Tests als einen Indikator für die Gesundheit des Codes.
 Leicht zu schreibende Tests stehen für soliden Code.
 Schwierigkeiten, die beim Schreiben von Tests auftreten, weisen auf Probleme im Code hin und werden als klares Zeichen dafür gewertet, dass der Code überarbeitet werden sollte.
 Sie neigen dazu, Tests mit denselben Techniken zu schreiben, die sie auch für den Produktionscode verwenden und verzichten auf die Verwendung von Reflection oder Classloading Hacks.
-Designer möchten besonders den TDD Ansatz, der ein gewisses Maß an Code Qualität garantiert.
+Designer mögen besonders den TDD Ansatz, der ein gewisses Maß an Code Qualität garantiert.
 Im Falle von Legacy Code neigen sie dazu, diesen zu refaktorieren, um ihn besser testen zu können.
 
 [.text-justify]
@@ -193,9 +193,9 @@ _Ja, Sie sollten über ihren Entwurf nachdenken!_
 
 [.text-justify]
 Diese Unterscheidung wird auch deutlich, wenn man die Funktionen der verschiedenen verfügbaren Testwerkzeuge betrachtet.
-Einige von Ihnen sind dazu da, das Untestbare zu testen, indem sie Ihnen die Möglichkeit geben, statische Methoden aufzurufen.
+Einige sind dazu da, das Untestbare zu testen, indem sie dir die Möglichkeit geben, statische Methoden aufzurufen.
 Andere vermeiden die Verwendung solcher Hacks.
-So hat JUnit beispielweise nie eine Funktion eingeführt, die das Testen privater Methoden vereinfachen würde, obwohl viele sein den Anfängen von JUnit eine solche Funktion gefordert haben.
+So hat JUnit beispielweise nie eine Funktion eingeführt, die das Testen privater Methoden vereinfachen würde, obwohl viele seit den Anfängen von JUnit eine solche Funktion gefordert haben.
 
 [.text-justify]
 Ich selbst neige dazu, mich näher an den Designern zu orientieren, ich teile das Interesse an gutem Design.
@@ -204,7 +204,7 @@ Das wirkt sich natürlich auf die von mir verwendeten Werkzeuge und Testverfahre
 === 1.6 Aber sollten Entwickler ihren eigenen Code testen?
 
 [.text-justify]
-Wahrscheinlich haben SIe schon ot gehört, dass Sie (als Entwickler) Ihren eigenen Code nicht testen sollten.
+Wahrscheinlich hast du schon oft gehört, dass du (als Entwickler) den eigenen Code nicht testen solltest.
 Es werden viele Gründe für diese Behauptung angeführt, aber zwei davon scheinen die stärksten und am häufigsten verwendeten zu sein:
 
 [.text-justify]
@@ -212,21 +212,21 @@ Es werden viele Gründe für diese Behauptung angeführt, aber zwei davon schein
 * man sollte nicht sein eigener Richter sein.
 
 [.text-justify]
-Lassen Sie uns dies klarstellen.
+Um eines klarzustellen.
 Beide sind gut begründet und beide sind zweifellos auf der Grundlage der realen, und zweifellos traurigen, Erfahrung vieler Entwicklungsteams entstanden.
 Sie sollten nicht allzu leichtfertig abgetan werden.
 Dennoch bin ich davon überzeugt, dass dieses "Allgemeinwissen" über das Testen eine Art Missverständnis widerspiegelt, oder vielleicht eher ein allgemeines Unvermögen, die Vielfältigkeit der Merkmale und Zwecke des Testens zu schätzen.
 
 [.text-justify]
 Wenn wir über abschließende Tests vor der Auslieferung der Software an den Kunden sprechen, dann sollten solche Tests meiner Meinung nach im Allgemeinen von professionellen Testern durchgeführt werden.
-Ich stimme zu, dass kein Entwickler durch die grafische Benutzeroberfläche klicken und so aggressiv un neugierig sein kann wie ein erfahrener Tester.
+Ich stimme zu, dass kein Entwickler durch die grafische Benutzeroberfläche klicken und so aggressiv und neugierig sein kann wie ein erfahrener Tester.
 Aber das sind nicht die einzigen Tests, die es gibt!
-Es gibt viele wertvolle Tests, die von den Entwicklern selbst durchgeführt werden können und sollten.
+Es gibt viele wertvolle Tests, die von den Entwicklern selbst durchgeführt werden können *und* sollten.
 
 [.text-justify]
 Die Prüfung von Software aus der Sicht des Kunden ist von entscheidender Bedeutung, aber dies ist nur ein Teil eines größeren Puzzles.
-Bevor SIe das tun können, muss ein Entwicklungsteam Ihnen Software zur Verfügung stellen.
-Und wenn sie nicht ihre eigenen Tests, die Entwicklertests, durchführen, werden sie Ihnen wahrscheinlich etwas von geringer Qualität liefern.
+Bevor du das tun kannst, muss ein Entwicklungsteam dir Software zur Verfügung stellen.
+Und wenn du nicht deine eigenen Tests, die Entwicklertests, durchführst, werden sie dir wahrscheinlich etwas von geringer Qualität liefern.
 Entwicklertests erhöhen die Qualität des an den Kunden gelieferten Produkts, aber auch die Qualität der Codebasis, was für jedes Entwicklungsteam von großer Bedeutung ist.
 Dies ist nicht zu verachten.
 Je mehr Vertrauen ein Entwicklungsteam in seinen Code hat, und je stolzer es darauf ist, desto bessere Ergebnisse wird es erzielen.
@@ -234,8 +234,8 @@ Die Tests der Entwickler helfen einem Team, Vertrauen zu gewinnen und weiterzuma
 
 [.text-justify]
 Außerdem lassen sich durch das frühzeitige Auffinden von Fehlern die Kosten (erheblich) senken und die Reparaturdauer verkürzen.
-Je mehr Fehler Sie frühzeitig finden, desto weniger kosten sie Sie.
-Das bekannte Zeit-Kosten-Verhältnis sehen Sie in der folgenden Abbildung.
+Je mehr Fehler du frühzeitig findest, desto weniger kosten sie dich bzw. das Unternehmen.
+Das bekannte Zeit-Kosten-Verhältnis siehst du in der folgenden Abbildung.
 
 :figure-caption: Abbildung
 .Kosten von Bugfixes
@@ -243,11 +243,11 @@ image::/Users/aloran/projectrepos/Textgeneration/src/main/resources/documents/te
 
 [.text-justify]
 Die Tests von Entwicklern sind die erste Verteidigungslinie gegen Bugs.
-Sie beseitigen sie, sobald sie auftauchen.
+Du beseitigst sie, sobald sie auftauchen.
 Natürlich werden aus den zu Beginn dieses Abschnitts genannten Gründen einige Bugs wahrscheinlich durchkommen.
 Nun, ja, das kann passieren!
 Aus diesem Grund müssen auch andere Verteidigungslinien vorhanden sein.
-Zum Beispiel hoch qualifizierte, spezialisierte Tester. hoffentlich werden sie alle verbleibenden Fehler aufspüren.
+Zum Beispiel hoch qualifizierte, spezialisierte Tester. Hoffentlich werden sie alle verbleibenden Fehler aufspüren.
 
 [.text-justify]
 In der Tat verlassen sich viele Unternehmen (fast) ausschließlich auf die Tests der Entwickler.
@@ -255,5 +255,5 @@ Große Namen, wie Facebook, verfolgen den CI Ansatz, der sich so zusammenfassen 
 Es ist also doch möglich, nicht wahr?
 Sollten Entwickler also ihren eigenen Code testen?
 Definitiv!
-Sollten Sie aber anderer meinung sein...so hören Sie bite auf das Dokument weiterzulesen.
-Es würde ihnen keinen weiteren Mehrwert bringen!
+Solltest du aber anderer mMeinung sein...so höre an dieser Stelle auf das Dokument zu lesen.
+Es wird dir keinen weiteren Mehrwert bringen!
