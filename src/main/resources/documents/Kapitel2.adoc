@@ -12,7 +12,7 @@ Die Abbildung zeigt mögliche Interaktionen zwischen einem SUT und anderen Entit
 image::/Users/aloran/projectrepos/Textgeneration/src/main/resources/documents/test/ArtenSUT.png[Arten,align="center"]
 
 [.text-justify]
-Zwei Interaktionen sind direkt und betreffen dsa SUT und seinen Client (in diesem fall eine Testklasse).
+Zwei Interaktionen sind direkt und betreffen das SUT und seinen Client (in diesem Fall eine Testklasse).
 Diese beiden Interaktionen sind sehr einfach zu handhaben - sie sind direkt im Testcode "verfügbar".
 Zwei weitere Interaktionen sind indirekt: Sie betreffen das SUT und DOCs.
 In diesem Fall hat der Client (eine Testklasse) keine Möglichkeit, die Interaktionen direkt zu steuern.
@@ -20,7 +20,7 @@ In diesem Fall hat der Client (eine Testklasse) keine Möglichkeit, die Interakt
 [.text-justify]
 Eine andere mögliche Klassifizierung unterteilt die Interaktionen in Eingaben (SUT empfängt eine Nachricht) und Ausgaben (das SUT sendet eine Nachricht).
 Beim Testen werden wir direkte und indirekte Eingaben verwenden, um das SUT in einen gewünschten Zustand zu versetzen und seine Methoden aufzurufen.
-Die direkten und indirekten Ausgaben des SUT sind Ausdrücke des Verhaltens des SUT; ds bedeutet, dass wir sie benutzen werden, um zu überprüfen, ob das SUT richtig funktioniert.
+Die direkten und indirekten Ausgaben des SUT sind Ausdrücke des Verhaltens des SUT; das bedeutet, dass wir sie benutzen werden, um zu überprüfen, ob das SUT richtig funktioniert.
 
 [.text-justify]
 Die nachfolgende Tabelle fasst die Arten der möglichen Zusammenarbeit zwischen einem SUT und DOCs zusammen.
@@ -117,12 +117,12 @@ clientType, zurückgegeben von clientDAO, und Bonus, welche von calculator an da
 === 2.1 Zustands- vs. Interaktionstests
 
 [.text-justify]
-Erinnern wir und nun an die einfache Abstraktion eines OO-Systems in Abbildung 1. Sie zeigt, wie zwei Arten von Klassen, Worker und Manager, zusammenarbeiten, um eine von einem Kunde gestellte Anfrage zu erfüllen. Das Buch beschreibt Unit-Tests für beide Arten von Klassen. Zunächst werden wir in die Welt der Worker eintauchen, denn wir wollen sicherstellen, dass die von ihnen durchgeführten Berechnungen und die von ihnen zurückgegebenen Werte korrekt sind. Dieser Teil des Unit-Tests, auch State-Testing genannt, ist wirklich einfach und seit vielen Jahren voll anerkannt.  Bei dieser Art von Test werden direkte Eingaben und Ausgaben verwendet.
+Erinnern wir und nun an die einfache Abstraktion eines OO-Systems in Abbildung 1. Sie zeigt, wie zwei Arten von Klassen, Worker und Manager, zusammenarbeiten, um eine von einem Kunde gestellte Anfrage zu erfüllen. Der Artikel beschreibt Unit-Tests für beide Arten von Klassen. Zunächst werden wir in die Welt der Worker eintauchen, denn wir wollen sicherstellen, dass die von uns durchgeführten Berechnungen und die von uns zurückgegebenen Werte korrekt sind. Dieser Teil des Unit-Tests, auch State-Testing genannt, ist wirklich einfach und seit vielen Jahren voll anerkannt.  Bei dieser Art von Test werden direkte Eingaben und Ausgaben verwendet.
 
 === 2.2 Warum sollte an sich über indirekte Interaktionen Gedanken machen?
 
 [.text-justify]
-An dieser Stelle könnte mich ein objektorientierter Eiferer anschreien : "Schon mal was von Kapselung und Informationsverschleierung gehört? Warum um alles in der Welt sollten wir uns also Gedanken darüber machen, welchen Methoden das SUT bei einem Kollaborateur aufruft? Warum belassen wir es nicht bei einem Implementierungsdetail des SUT= Wenn dies ein privater Teil der SUT Implementierung ist, dann sollten wir es überhaupt nicht anfassen!"
+An dieser Stelle könnte mich ein objektorientierter Eiferer anschreien : "Schon mal was von Kapselung und Informationsverschleierung gehört? Warum um alles in der Welt sollten wir uns also Gedanken darüber machen, welchen Methoden das SUT bei einem Kollaborateur aufruft? Warum belassen wir es nicht bei einem Implementierungsdetail des SUT? Wenn dies ein privater Teil der SUT Implementierung ist, dann sollten wir es überhaupt nicht anfassen!"
 
 [.text-justify]
 Das klingt vernünftig, nicht wahr? Wenn wir doch nur unsere Klassen gründlich testen könnten, indem wir einfach ihre API verwenden! Aber leider ist das nicht immer möglich.
@@ -131,44 +131,44 @@ Das klingt vernünftig, nicht wahr? Wenn wir doch nur unsere Klassen gründlich 
 Betrachten wir ein einfaches Beispiel für das Abrufen von Objekten aus einem Cache.
 
 [.text-justify]
-Erinnern wir uns an die allgemeine Idee eines Caches. Es gibt zwei Speicherorte, den "echten", mit enormer Kapazität und durschnittlicher Zugriffszeit, und den "Cache", der eine viel kleinere Kapazitä, aber viel schnellere Zugriffszeit hat. Lasst und nun einige Anforderungen an ein system mit einem Cache definieren. Dies wird kein Cache-Mechanismus sein, sondern reicht aus, um das Problem zu veranschaulichen, dem wir begegnen werden.
+Erinnern wir uns an die allgemeine Idee eines Caches. Es gibt zwei Speicherorte, den "echten", mit enormer Kapazität und durschnittlicher Zugriffszeit, und den "Cache", der eine viel kleinere Kapazität, aber viel schnellere Zugriffszeit hat. Lasst und nun einige Anforderungen an ein System mit einem Cache definieren. Dies wird kein Cache-Mechanismus sein, sondern reicht aus, um das Problem zu veranschaulichen, dem wir begegnen werden.
 
 [.text-justify]
-Wenn wir nach einem Objekt mit dem Schlüssel X fragen, sollte unser System it seinem Cache nach folgenden einfachen Regeln vorgehen:
+Wenn wir nach einem Objekt mit dem Schlüssel X fragen, sollte unser System mit seinem Cache nach folgenden einfachen Regeln vorgehen:
 
 [.text-justify]
-1. Wenn sich das Objekt mit dem Schlüssel X an keinem Speicherort befindet, gibt das System null zurücl.
+1. Wenn sich das Objekt mit dem Schlüssel X an keinem Speicherort befindet, gibt das System null zurück.
 
 2. Wenn das Objekt mit dem Schlüssel X an einem beliebigen Speicherort existiert, wird es zurückgegeben:
 
 * Wenn es im Cache Speicher vorhanden ist, wird es von diesem Speicherort zurückgegeben
 
-* Der Hauptspecherplatz wird nur dann durchsucht, wenn das Objekt mit dem Schlüssel X nicht im Cache vorhanden ist
+* Der Hauptspeicherplatz wird nur dann durchsucht, wenn das Objekt mit dem Schlüssel X nicht im Cache vorhanden ist
 
 [.text-justify]
 Es geht natürlich um eine intelligente Caching-Strategie, die die Trefferquote im Chache erhöht, aber das ist für unsere Diskussion nicht wirklich relevant. Was uns interessiert, sind die Ausgaben und die Interaktionen zwischen dem SUT und seinen Kollaborateuren.
 
 [.text-justify]
-Wenn man die oben aufgeführten Anforderungen betrachtet, werden Sie feststellen, das mit mit State Testing nur zwei von ihnen testen können. 1 und 2. Das liegt daran, dass beim state Testing die Privatspäre der Objekte respektiert wird.
+Wenn man die oben aufgeführten Anforderungen betrachtet, wirst du feststellen, das mit  State Testing nur zwei von ihnen getestet werden können. 1 und 2. Das liegt daran, dass beim state Testing die Privatspäre der Objekte respektiert wird.
 
 [.text-justify]
 Es ist nicht möglich zu sehen, was das Objekt tut, was in unserem Fall bedeutet, dass nicht überprüft werden kann, aus welchem Speicherbereich das angefordertre Objekt abgerufen wurde. Daher können die Anforderungen 2a und 2b nicht durch Zustandstests überprüft werden.
 
 [.text-justify]
-Dies ist in der folgenden Abbildung dargestellt. Unser SUT, das aus zweo Speicherorten besteht, einem schnellen Cache-Speicher und einem langsameren realen Speicher, ist über eine einzige get() Methode zugänglich. Der CLient, der Anfragen an ds SUT sendet, weiß nichts über dessen interne Komplexität.
+Dies ist in der folgenden Abbildung dargestellt. Unser SUT, das aus zwei Speicherorten besteht, einem schnellen Cache-Speicher und einem langsameren realen Speicher, ist über eine einzige get() Methode zugänglich. Der CLient, der Anfragen an das SUT sendet, weiß nichts über dessen interne Komplexität.
 
 :figure-caption: Abbildung
 .Funktioniert das Storage nun korrekt oder nicht?
 image::/Users/aloran/projectrepos/Textgeneration/src/main/resources/documents/test/FunktionsfähigoderNicht.png[Funktioniert oder nicht,align="center"]
 
 [.text-justify]
-Im Idealfall wird bei der Anfrage zuerst der Cache-Speicher durchsucht und dann, falls der Cache Speicher keinen Eintrag mit dem gegebenen Schlüssel hat, der Hauptspeicher durchsucht. Wenn das SUT jedoch nicht korrekt implementiert ist, kann es zuerst im Hauptspeicher schauen, ohne den schnelleren Speicher zu überprüfen. Der Client, der auf ein Objekt mit dem angegebenen Schlüssel wartet, kann nicht zwischen diesen beiden Situationen unterscheiden. er weiß nur, dass er ein Objekt mit dem Schlüssel X angefordert hat und dass er es bekommen hat.
+Im Idealfall wird bei der Anfrage zuerst der Cache-Speicher durchsucht und dann, falls der Cache Speicher keinen Eintrag mit dem gegebenen Schlüssel hat, der Hauptspeicher durchsucht. Wenn das SUT jedoch nicht korrekt implementiert ist, kann es zuerst im Hauptspeicher schauen, ohne den schnelleren Speicher zu überprüfen. Der Client, der auf ein Objekt mit dem angegebenen Schlüssel wartet, kann nicht zwischen diesen beiden Situationen unterscheiden. Er weiß nur, dass er ein Objekt mit dem Schlüssel X angefordert hat und dass er es bekommen hat.
 
 [.text-justify]
 Um wirklich zu überprüfen, ob unser System so funktioniert, wie es soll oder nicht, müssen Interaktionstests durchgeführt werden. Die Reihenfolge der Aufrufe an die Kollaborateure, Cache und realer Speicher, muss überprüft werden. Ohne dies könne wir nicht sagen, ob das System funktioniert oder nicht.
 
 [.text-justify]
-Dieses einfache Beispiel zeigt, dass die Verifikation des beobachtbaren Verhaltens des SUT, seiner direkten Ausgaben, nciht ausreihct. Ähnliche Probleme ergeben sich beim Testn von Managern, die die Bemühungen anderer koordinieren. Wie bereits erwähnt, sind solche koordinierenden Klasen in OO-Systemen recht beliebt. Aus diesem grund werden wir viel Zeit darauf verwenden, Technikem, Werkzeuge und Probleme im Zusammenhang mit dem Testen indirekter Ausgaben zu erörtern.
+Dieses einfache Beispiel zeigt, dass die Verifikation des beobachtbaren Verhaltens des SUT, seiner direkten Ausgaben, nicht ausreicht. Ähnliche Probleme ergeben sich beim Testn von Managern, die die Bemühungen anderer koordinieren. Wie bereits erwähnt, sind solche koordinierenden Klasen in OO-Systemen recht beliebt. Aus diesem Grund werden wir viel Zeit darauf verwenden, Techniken, Werkzeuge und Probleme im Zusammenhang mit dem Testen indirekter Ausgaben zu erörtern.
 
 [.text-justify]
 Aber konzentrieren wir uns zunächst auf den einfacheren Fall. Im nächsten Abschnitt werden wir lernen, wie man einfache Objekte testet, die keine Kollaborateure haben.
